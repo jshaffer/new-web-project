@@ -26,17 +26,12 @@ module.exports = function(config) {
 
 	app.use("/libs", express.static(contentFolders.libsFolder));
 
-	app.use("/api", bodyParser.json());
+	//rest service
+	app.use("/rest", bodyParser.json());
+	var rest = require("./routers/rest")();
+	app.use("/rest", rest);
 
-	app.use("/api/upload", function(req, res) {
-		res.json({
-			message: "upload successful!"
-		});
-	});
-
-	app.use("/api", require("./routers/rest.js")("user-file"));
-	app.use("/api", require("./routers/rest.js")("account"));
-
+	//serving index.html
 	app.use("/", function(req, res) {
 		res.sendFile(config.httpServer.indexFile, function(err) {
 			if (err) {

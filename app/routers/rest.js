@@ -1,39 +1,20 @@
-module.exports = function(fileName) {
+module.exports = function() {
 
 	var express = require("express"),
 		router = express.Router();
 
 	router.route("/test")
 		.get(function(req, res) {
-			DataModel.findById(req.params.id,
-				function(err, result) {
-					if (err) {
-						
-						return;
-					}
-					res.json(result);
-				});
+			res.send("/rest/test {GET} worked");
+		})
+		.post(function(req, res) {
+			res.send("/rest/test {POST} worked");
 		})
 		.put(function(req, res) {
-			DataModel.findByIdAndUpdate(req.params.id,
-				req.body,
-				function(err, result) {
-					if (err) {
-						res.status(500).json(err);
-						return;
-					}
-					res.json(req.body);
-				});
+			res.send("/rest/test {PUT} worked");
 		})
 		.delete(function(req, res) {
-			DataModel.findByIdAndRemove(req.params.id,
-				function(err, result) {
-					if (err) {
-						res.status(500).json(err);
-						return;
-					}
-					res.json(result);
-				});
+			res.send("/rest/test {DELETE} worked");
 		});
 
  	return router;
